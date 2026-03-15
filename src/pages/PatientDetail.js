@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import Sidebar, { useMobile } from '../components/Sidebar';
 import { Users, UserPlus, Calendar, Bell, CreditCard, ClipboardList, Eye, Pencil, Trash2, Search, CheckCircle2, AlertTriangle, Clock, ArrowLeft, ArrowRight, Printer, Plus, RefreshCw, Activity, FileText, Stethoscope, Phone, Mail, MapPin, Loader2, XCircle, ChevronDown, Upload, X, Check, AlertCircle, Zap, Heart, Tag, Receipt, CreditCard as CardIcon, Folder, File, FileUp, Replace, RotateCcw, Droplets, Pill, Building2, CheckCheck, MinusCircle, UserCircle } from 'lucide-react';
 
-const API_BASE = 'http://localhost:8080/api';
+const API_BASE = 'https://dental-backend-production-23c5.up.railway.app/api';
 
 const api = (token) => axios.create({
   baseURL: API_BASE,
@@ -723,9 +723,9 @@ export default function PatientDetail() {
                   {reports.map((report,i) => (
                     <div key={i} className="report-card" style={{ background:'#f9fafb', border:'1px solid #e5e7eb', borderRadius:16, overflow:'hidden', transition:'all 0.2s', animation:`fadeUp 0.3s ease ${i*0.05}s both` }}>
                       <div style={{ height:150, background:'#f9fafb', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', overflow:'hidden', position:'relative' }}
-                        onClick={() => window.open(`http://localhost:8080/api/reports/view/${id}/${report.fileName}`, '_blank')}>
+                        onClick={() => window.open(`https://dental-backend-production-23c5.up.railway.app/api/reports/view/${id}/${report.fileName}`, '_blank')}>
                         {report.type === 'image' ? (
-                          <img src={`http://localhost:8080/api/reports/view/${id}/${report.fileName}`} alt={report.displayName} style={{ width:'100%', height:'100%', objectFit:'cover' }} onError={e => { e.target.style.display='none'; }} />
+                          <img src={`https://dental-backend-production-23c5.up.railway.app/api/reports/view/${id}/${report.fileName}`} alt={report.displayName} style={{ width:'100%', height:'100%', objectFit:'cover' }} onError={e => { e.target.style.display='none'; }} />
                         ) : (
                           <div style={{ textAlign:'center' }}>
                             <div style={{ fontSize:52 }}>{report.type==='pdf' ? <File size={52} /> : <File size={52} />}</div>
@@ -741,7 +741,7 @@ export default function PatientDetail() {
                       <div style={{ padding:'12px 14px' }}>
                         <div style={{ color:'#111', fontSize:12, fontWeight:700, marginBottom:10, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }} title={report.displayName}>{report.displayName}</div>
                         <div style={{ display:'flex', gap:6 }}>
-                          <button onClick={() => window.open(`http://localhost:8080/api/reports/view/${id}/${report.fileName}`, '_blank')} style={{ flex:1, padding:'7px 0', background:'rgba(13,148,136,0.2)', color:'#00ACB1', border:'1px solid rgba(94,234,212,0.25)', borderRadius:8, cursor:'pointer', fontSize:12, fontWeight:600 }}><span style={{display:"inline-flex",alignItems:"center",gap:6}}><Eye size={13} /> View</span></button>
+                          <button onClick={() => window.open(`https://dental-backend-production-23c5.up.railway.app/api/reports/view/${id}/${report.fileName}`, '_blank')} style={{ flex:1, padding:'7px 0', background:'rgba(13,148,136,0.2)', color:'#00ACB1', border:'1px solid rgba(94,234,212,0.25)', borderRadius:8, cursor:'pointer', fontSize:12, fontWeight:600 }}><span style={{display:"inline-flex",alignItems:"center",gap:6}}><Eye size={13} /> View</span></button>
                           <button onClick={() => { setReplaceTarget({ fileName:report.fileName, displayName:report.displayName }); setTimeout(() => replaceInputRef.current?.click(), 50); }} style={{ flex:1, padding:'7px 0', background:'#f0fefe', color:'#015D67', border:'1px solid #87E4DB', borderRadius:7, cursor:'pointer', fontSize:11, fontWeight:600 }}><RefreshCw size={14} /> Replace</button>
                           <button onClick={() => handleDeleteReport(report.fileName, report.displayName)} style={{ padding:'7px 10px', background:'#fef2f2', color:'#dc2626', border:'1px solid #fecaca', borderRadius:7, cursor:'pointer', fontSize:11 }}><Trash2 size={14} /></button>
                         </div>
@@ -846,7 +846,7 @@ export default function PatientDetail() {
               <button
                 onClick={async () => {
                   try {
-                    const apiInst = axios.create({ baseURL:'http://localhost:8080/api', headers:{ Authorization:`Bearer ${token}` } });
+                    const apiInst = axios.create({ baseURL:'https://dental-backend-production-23c5.up.railway.app/api', headers:{ Authorization:`Bearer ${token}` } });
                     await apiInst.delete(`/visits/${deleteBillingVisit.id}`);
                     toast.success('Billing entry deleted');
                     setShowDeleteBillingConfirm(false);
@@ -878,7 +878,7 @@ function PaymentModal({ patient, billing, token, patientId, onClose, onSuccess }
     if (!amt || amt <= 0) { toast.error('Please enter a valid amount'); return; }
     setLoading(true);
     try {
-      const api = axios.create({ baseURL: 'http://localhost:8080/api', headers: { Authorization: `Bearer ${token}` } });
+      const api = axios.create({ baseURL: 'https://dental-backend-production-23c5.up.railway.app/api', headers: { Authorization: `Bearer ${token}` } });
       await api.post(`/patients/${patientId}/billing/payment`, { amount: amt, note });
       toast.success(`Payment of ₹${amt} recorded!`);
       onSuccess();
@@ -989,7 +989,7 @@ function SetInitialBillingBar({ patient, token, patientId, isMobile, onSuccess }
     if (!cost || cost <= 0) { toast.error('Please enter a treatment cost'); return; }
     setLoading(true);
     try {
-      const apiInst = axios.create({ baseURL: 'http://localhost:8080/api', headers: { Authorization: `Bearer ${token}` } });
+      const apiInst = axios.create({ baseURL: 'https://dental-backend-production-23c5.up.railway.app/api', headers: { Authorization: `Bearer ${token}` } });
       // Add a visit with just the billing info
       await apiInst.post('/visits', {
         patientId,
@@ -1147,7 +1147,7 @@ function EditBillingModal({ visit, token, onClose, onSuccess }) {
     if (paid > cost) { toast.error('Amount paid cannot exceed treatment cost'); return; }
     setLoading(true);
     try {
-      const apiInst = axios.create({ baseURL:'http://localhost:8080/api', headers:{ Authorization:`Bearer ${token}` } });
+      const apiInst = axios.create({ baseURL:'https://dental-backend-production-23c5.up.railway.app/api', headers:{ Authorization:`Bearer ${token}` } });
       // Only send clean Visit model fields — never spread billing.visits items
       // which contain computed fields like 'balance' that aren't in the model
       await apiInst.put(`/visits/${visit.id}`, {

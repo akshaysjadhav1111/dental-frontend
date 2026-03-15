@@ -25,7 +25,7 @@ import {
   X,
 } from 'lucide-react';
 
-const API_BASE = 'http://localhost:8080/api';
+const API_BASE = 'https://dental-backend-production-23c5.up.railway.app/api';
 const apicall = (token) => axios.create({
   baseURL: API_BASE,
   headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }

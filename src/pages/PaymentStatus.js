@@ -23,7 +23,7 @@ import {
   CheckCheck,
 } from 'lucide-react';
 
-const API_BASE = 'http://localhost:8080/api';
+const API_BASE = 'https://dental-backend-production-23c5.up.railway.app/api';
 
 export default function PaymentStatus() {
   const navigate = useNavigate();
